@@ -42,7 +42,35 @@ fs.readFile('input.json', 'utf8', (err, data) => {
 
         const secret = lagrangeInterpolation(points, k);
 
-        console.log("The secret (constant term) is:", secret);
+        console.log("The secret for input 1 is:", secret);
+    } catch (error) {
+        console.error("Error processing data:", error);
+    }
+});
+
+fs.readFile('input2.json', 'utf8', (err, data) => {
+    if (err) {
+        console.error("Error reading file:", err);
+        return;
+    }
+
+    try {
+        const input = JSON.parse(data);
+        const n = input.keys.n;
+        const k = input.keys.k;
+
+        const points = [];
+        for (let i = 1; i <= n; i++) {
+            if (input[i]) {
+                const x = i;
+                const y = decodeValue(input[i].value, parseInt(input[i].base));
+                points.push([x, y]);
+            }
+        }
+
+        const secret = lagrangeInterpolation(points, k);
+
+        console.log("The secret for input 2 is:", secret);
     } catch (error) {
         console.error("Error processing data:", error);
     }
